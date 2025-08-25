@@ -1,7 +1,8 @@
 function LinkedList() {
   let headNode = null;
   const prepend = (value) => {
-    const newNode = Node(value);
+    const newNode = Node();
+    newNode.value = value;
     if (!headNode) {
       headNode = newNode;
     } else {
@@ -31,18 +32,14 @@ function LinkedList() {
     }
   };
   const append = (value) => {
-    const newNode = Node(value);
     const size = getSize();
+    const newNode = Node();
+    newNode.value = value;
     if (!size) {
       headNode = newNode;
       return;
     }
     at(size - 1).nextNode = newNode;
-  };
-  const getTail = (list) => {
-    if (!list.nextNode) {
-      return list;
-    } else return getTail(list.nextNode);
   };
   const pop = () => {
     const size = getSize();
@@ -81,14 +78,19 @@ function LinkedList() {
     return null;
   };
   const insertAt = (value, index) => {
+    const newNode = Node();
+    newNode.value = value;
+    if (!headNode) {
+      headNode = newNode;
+      return;
+    }
     const size = getSize();
-    const newNode = Node(value);
     const preNode = at(index - 1);
     if (at(index)) {
       newNode.nextNode = at(index);
     }
     if (preNode) {
-      at(index - 1).nextNode = newNode;
+      preNode.nextNode = newNode;
     } else {
       at(size - 1).nextNode = newNode;
     }
@@ -123,12 +125,6 @@ function LinkedList() {
     },
   };
 }
-function Node(input) {
-  return { value: input, nextNode: null };
+function Node() {
+  return { value: null, nextNode: null };
 }
-const m = LinkedList();
-m.append("newew");
-m.append("dog");
-m.append("mouse");
-m.append("cat");
-m.prepend("wolf");
